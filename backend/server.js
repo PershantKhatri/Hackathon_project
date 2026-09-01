@@ -25,7 +25,6 @@ app.use('/api/users', require('./routes/userRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
-// Server Listen (Yeh hamesha 'app' define hone ke baad aayega)
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
