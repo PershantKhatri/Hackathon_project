@@ -9,12 +9,19 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
+// CORS configuration jo preflight redirect error ko khatam kar degi
+app.use(cors({
+  origin: "*", // Development ke liye sabhi origins allow hain
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 
 // Define Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/complaints', require('./routes/complaintRoutes'));
-app.use('/api/users', require('./routes/userRoutes')); // <-- Yeh line yahan add karni hai
+app.use('/api/users', require('./routes/userRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
