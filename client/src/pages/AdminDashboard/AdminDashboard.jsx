@@ -17,10 +17,10 @@ export default function AdminDashboard() {
   const fetchAdminData = async () => {
     try {
       setError('');
-      const compRes = await API.get('/complaints/all');
+      const compRes = await API.get('/api/complaints/all');
       setComplaints(compRes.data);
 
-      const userRes = await API.get('/users');
+      const userRes = await API.get('/api/users');
       setUsers(userRes.data);
     } catch (err) {
       setError('Error fetching admin data');
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await API.patch(`/complaints/${id}/status`, { status: newStatus });
+      await API.patch(`/api/complaints/${id}/status`, { status: newStatus });
       fetchAdminData();
     } catch (err) {
       alert('Failed to update status');
@@ -43,7 +43,7 @@ export default function AdminDashboard() {
 
   const handleUserStatusUpdate = async (id, status) => {
     try {
-      await API.patch(`/users/${id}/status`, { status });
+      await API.patch(`/api/users/${id}/status`, { status });
       fetchAdminData();
     } catch (err) {
       alert('Failed to update user status');
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
   // Submit Updated User Details
   const handleUpdateUser = async (userId) => {
     try {
-      await API.put(`/users/${userId}`, editFormData);
+      await API.put(`/api/users/${userId}`, editFormData);
       setEditingUserId(null);
       setSuccess('User updated successfully');
       fetchAdminData();
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
     if (!window.confirm('Are you sure you want to delete this user account?')) return;
 
     try {
-      await API.delete(`/users/${userId}`);
+      await API.delete(`/api/users/${userId}`);
       setSuccess('User deleted successfully');
       fetchAdminData();
     } catch (err) {
