@@ -13,22 +13,22 @@ const protect = async (req, res, next) => {
         return res.status(403).json({ message: 'Account is inactive, pending approval, or blocked.' });
       }
       
-      next();
+      return next();
     } catch (error) {
-      res.status(401);
-      throw new Error('Not authorized, token failed');
+      return res.status(401).json({ message: 'Not authorized, token failed' });
     }
   }
+
   if (!token) {
-    res.status(401).json({ message: 'Not authorized, no token' });
+    return res.status(401).json({ message: 'Not authorized, no token' });
   }
 };
 
 const adminOnly = (req, res, next) => {
   if (req.user && req.user.role === 'ADMIN') {
-    next();
+    return next();
   } else {
-    res.status(403).json({ message: 'Access denied. Admin only.' });
+    return res.status(403).json({ message: 'Access denied. Admin only.' });
   }
 };
 

@@ -44,7 +44,7 @@ const updateUserRole = async (req, res) => {
   try {
     const { role } = req.body; // 'USER' or 'ADMIN'
     const targetUser = await User.findById(req.params.id);
-    const loggedInAdmin = req.user; // Request bhejne wala admin (Auth middleware se aayega)
+    const loggedInAdmin = req.user;
 
     if (!targetUser) {
       return res.status(404).json({ message: 'User not found' });
@@ -55,9 +55,8 @@ const updateUserRole = async (req, res) => {
       return res.status(400).json({ message: 'Aap apne aap ko ADMIN se remove nahi kar sakte!' });
     }
 
-    // 2. Agar loggedInAdmin ko is targetUser ne banaya tha (yani junior admin senior ko remove karne ki koshish kar raha hai)
-    if (targetUser.createdBy && targetUser.createdBy.toString() === loggedInAdmin._id.toString()) {
-      // Junior admin apne creator ko downgrade nahi kar sakta
+    // 2. Junior admin apne creator (Senior Admin) ko downgrade nahi kar sakta
+    if (loggedInAdmin.createdBy && loggedInAdmin.createdBy.toString() === targetUser._id.toString()) {
       return res.status(403).json({ message: 'Aap jis admin ne aapko banaya hai, aap usay remove nahi kar sakte!' });
     }
 
@@ -96,12 +95,11 @@ const updateUserByAdmin = async (req, res) => {
 
     // 1. Admin apne aap ko USER nahi bana sakta
     if (loggedInAdmin._id.toString() === targetUser._id.toString() && role && role !== 'ADMIN') {
-      return res.status(400).json({ message: 'You cannot remove your ownn self from admin!' });
+      return res.status(400).json({ message: 'You cannot remove yourself from admin!' });
     }
 
-    // 2. Check if a junior admin is trying to modify their creator/senior admin
+    // 2. Junior admin apne creator/senior admin ko modify nahi kar sakta
     if (targetUser._id.toString() !== loggedInAdmin._id.toString()) {
-      // Agar target user wo admin hai jisne loggedInAdmin ko banaya tha
       if (loggedInAdmin.createdBy && loggedInAdmin.createdBy.toString() === targetUser._id.toString()) {
         if (role && role === 'USER') {
           return res.status(403).json({ message: 'You cannot remove the admin who created you!' });
@@ -147,14 +145,12 @@ const deleteUser = async (req, res) => {
 
     // 1. Admin khud ko delete nahi kar sakta
     if (loggedInAdmin._id.toString() === targetUser._id.toString()) {
-      return res.status(400).json({ message: 'You cannot delete own account!' });
+      return res.status(400).json({ message: 'You cannot delete your own account!' });
     }
 
     // 2. Junior admin apne creator/senior admin ko delete nahi kar sakta
-    if (targetUser._id.toString() !== loggedInAdmin._id.toString()) {
-      if (loggedInAdmin.createdBy && loggedInAdmin.createdBy.toString() === targetUser._id.toString()) {
-        return res.status(403).json({ message: 'You cannot delete your creator admin' });
-      }
+    if (loggedInAdmin.createdBy && loggedInAdmin.createdBy.toString() === targetUser._id.toString()) {
+      return res.status(403).json({ message: 'You cannot delete your creator admin' });
     }
 
     await targetUser.deleteOne();
