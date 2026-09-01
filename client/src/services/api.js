@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://hackathon-project-khatri6.vercel.app/',
 });
 
 // Request interceptor to attach JWT token automatically

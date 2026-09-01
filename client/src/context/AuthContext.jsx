@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   // Register Function
   const register = async (name, email, password) => {
     try {
-      const response = await API.post('/auth/register', { name, email, password });
+      const response = await API.post('/api/auth/register', { name, email, password });
       return { success: true, data: response.data };
     } catch (error) {
       return { 
@@ -22,14 +22,14 @@ export const AuthProvider = ({ children }) => {
   // Login Function
   const login = async (email, password) => {
     try {
-      const response = await API.post('/auth/login', { email, password });
+      const response = await API.post('/api/auth/login', { email, password });
       
       localStorage.setItem('token', response.data.token);
-      setUser(response.data); // Fixed: response.data direct set hoga
+      setUser(response.data);
 
       return { 
         success: true, 
-        role: response.data.role // Fixed: response.data se role milega
+        role: response.data.role 
       };
     } catch (error) {
       return { 
