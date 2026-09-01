@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://hackathon-project-git-main-khatri6.vercel.app', // Live Vercel backend URL
+  baseURL: 'https://hackathon-project-khatri6.vercel.app', // Live Vercel backend URL
 });
 
 API.interceptors.request.use((req) => {
