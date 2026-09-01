@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const serverless = require('serverless-http'); // <-- Yeh add karein
+const serverless = require('serverless-http');
 
 dotenv.config();
 connectDB();
@@ -18,6 +18,11 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
+
+// Root route taake browser mein page ghoome nahi balkay message aaye
+app.get('/', (req, res) => {
+  res.send('Backend API is live and running!');
+});
 
 // Define Routes
 app.use('/api/auth', require('./routes/authRoutes'));
