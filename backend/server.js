@@ -11,12 +11,7 @@ const app = express();
 app.use(express.json());
 
 // CORS configuration jo preflight redirect error ko khatam kar degi
-app.use(cors({
-  origin: "*", // Development ke liye sabhi origins allow hain
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
+app.use(cors());
 
 // Define Routes
 app.use('/api/auth', require('./routes/authRoutes'));
