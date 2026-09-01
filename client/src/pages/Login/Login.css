@@ -1,79 +1,190 @@
-.login-container {
+/* ==========================================
+   AUTH CONTAINER & FORM STYLING (Login & Register)
+   ========================================== */
+.auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  min-height: 85vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  box-sizing: border-box;
 }
 
-.login-form {
+.auth-form {
   width: 100%;
-  max-width: 400px;
-  padding: 30px;
+  max-width: 420px;
+  padding: 35px;
   background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
-.login-form h2 {
-  margin-bottom: 20px;
+.auth-form:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.auth-form h2 {
+  margin-bottom: 24px;
   text-align: center;
-  color: #333;
+  color: #1e293b;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
+/* Form Groups & Inputs */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #555;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.9rem;
 }
 
-.form-group input {
+.form-group input, 
+.form-group select, 
+.form-group textarea {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #334155;
+  background-color: #f8fafc;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
-.login-btn {
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+/* Buttons (Login = Green, Register = Blue ya jo aapki marzi ho) */
+.btn-primary {
   width: 100%;
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
+  padding: 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   margin-top: 10px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Login Button (Green Theme) */
+.login-btn {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
 }
 
 .login-btn:hover {
-  background-color: #218838;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
 }
 
+/* Register Button (Blue Theme - agar alag rakhna ho) */
+.register-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.register-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Messages */
 .error-msg {
-  color: #dc3545;
-  margin-bottom: 15px;
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #fecaca;
+  box-sizing: border-box;
 }
 
+.success-msg {
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #bbf7d0;
+  box-sizing: border-box;
+}
+
+/* Switch Text */
 .switch-text {
-  margin-top: 15px;
+  margin-top: 20px;
   text-align: center;
   font-size: 0.9rem;
+  color: #64748b;
 }
 
 .switch-text a {
-  color: #007bff;
+  color: #2563eb;
   text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .switch-text a:hover {
+  color: #1d4ed8;
   text-decoration: underline;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE MEDIA QUERY
+   ========================================== */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 15px;
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  .auth-form {
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .auth-form h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .form-group input {
+    padding: 10px 12px;
+  }
 }

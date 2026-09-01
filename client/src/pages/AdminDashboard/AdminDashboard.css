@@ -1,52 +1,286 @@
+/* ==========================================
+   ADMIN DASHBOARD LAYOUT & TABS STYLING
+   ========================================== */
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+}
+
+.dashboard-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.dashboard-content h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 24px;
+}
+
+/* Tab Buttons Styling */
 .tab-buttons {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap; /* Mobile par buttons niche wrap hone ke liye */
 }
 
 .tab-btn {
-  padding: 10px 20px;
-  background-color: #e2e6ea;
+  padding: 10px 24px;
+  background-color: #e2e8f0;
+  color: #475569;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tab-btn:hover {
+  background-color: #cbd5e1;
+  color: #1e293b;
 }
 
 .tab-btn.active {
-  background-color: #343a40;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
+/* ==========================================
+   TABLE & CARDS STYLING
+   ========================================== */
+.table-card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  overflow-x: auto; 
+  box-sizing: border-box;
+}
+
+.table-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 16px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 14px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.data-table td {
+  padding: 12px 14px;
+  color: #334155;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.data-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* ==========================================
+   COMPACT ACTION BUTTONS
+   ========================================== */
 .status-select {
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #fff;
+  color: #334155;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
 .approve-btn {
-  background-color: #28a745;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   color: white;
   border: none;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
+  margin-right: 4px;
+  display: inline-block;
+  transition: opacity 0.2s ease;
 }
 
-.approve-btn:hover { background-color: #218838; }
+.approve-btn:hover {
+  opacity: 0.9;
+}
 
 .deactivate-btn {
-  background-color: #dc3545;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
   border: none;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+.deactivate-btn:hover {
+  opacity: 0.9;
+}
+
+.data-table td .edit-action-btn {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  background: #3b82f6;
+  color: white;
+  border-radius: 5px;
+  box-shadow: none;
+  margin-right: 4px;
+  display: inline-block;
+  border: none;
   cursor: pointer;
 }
 
-.deactivate-btn:hover { background-color: #c82333; }
+.data-table td .edit-action-btn:hover {
+  background: #2563eb;
+}
 
-.status-badge.active { background-color: #d4edda; color: #155724; }
-.status-badge.pending { background-color: #ffeeba; color: #856404; }
-.status-badge.inactive { background-color: #f8d7da; color: #721c24; }
+/* Edit Inputs Inside Table */
+.data-table td input[type="text"],
+.data-table td input[type="email"],
+.data-table td select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  background-color: #fff;
+  color: #334155;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   STATUS BADGES
+   ========================================== */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.active { 
+  background-color: #dcfce7; 
+  color: #166534; 
+}
+
+.status-badge.pending { 
+  background-color: #fef9c3; 
+  color: #854d0e; 
+}
+
+.status-badge.inactive, .status-badge.rejected, .status-badge.deactivated { 
+  background-color: #fee2e2; 
+  color: #991b1b; 
+}
+
+/* ==========================================
+   RESPONSIVE MEDIA QUERY FOR DASHBOARD
+   ========================================== */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 20px 10px;
+  }
+  
+  .dashboard-content h2 {
+    font-size: 1.4rem;
+  }
+  
+  .table-card {
+    padding: 15px;
+  }
+}
+/* ==========================================
+   FIXED TABLE & SCREEN FIT STYLING
+   ========================================== */
+
+.table-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  overflow-x: hidden; /* Scrollbar ko completely disable karne ke liye */
+  box-sizing: border-box;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed; /* Columns ko screen ke mutabiq adjust karne ke liye */
+}
+
+.data-table th, 
+.data-table td {
+  padding: 10px 12px; /* Padding thodi kam ki taake space bache */
+  color: #334155;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+  word-break: break-word; /* Text lamba ho toh khud line wrap ho jaye */
+  white-space: normal !important; /* Forces text to wrap, removing horizontal scroll */
+}
+
+.data-table th {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.data-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Action Buttons ko compact karne ke liye taake table mein fit aayein */
+.data-table td .edit-action-btn,
+.data-table td .approve-btn,
+.data-table td .deactivate-btn {
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  margin-right: 2px;
+  display: inline-block;
+}

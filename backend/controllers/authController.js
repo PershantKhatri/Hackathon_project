@@ -24,7 +24,8 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      status: 'ACTIVE' 
+      role: 'USER', // 🛑 Explicitly set role to USER for all new signups
+      status: 'PENDING' // New user remains pending until approved by admin
     });
 
     if (user) {
@@ -34,7 +35,7 @@ const registerUser = async (req, res) => {
         email: user.email,
         role: user.role,
         status: user.status,
-        message: 'Registration successful.'
+        message: 'Registration successful. Please wait for admin approval to login.'
       });
     } else {
       res.status(400).json({ message: 'Invalid user data' });
@@ -44,27 +45,27 @@ const registerUser = async (req, res) => {
   }
 };
 
-// @desc Login User (With Password Security Enabled)
+// @desc Login User (With Password Security Enabled & Approval Check)
 const loginUser = async (req, res) => {
   try {
     const { password } = req.body;
     const email = req.body.email?.trim().toLowerCase();
     
-    // .select('+password') zaroori hai kyunki schema mein password select: false hota hai
+    // .select('+password') is required since password has select: false in schema
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Yahan bcrypt ka password check wapas enable ho gaya hai
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
+    // Check if user status is ACTIVE before allowing login
     if (user.status !== 'ACTIVE') {
-      return res.status(403).json({ message: `Access denied. Your account status is: ${user.status}` });
+      return res.status(403).json({ message: `Access denied. Your account status is: ${user.status}. Please wait for admin approval.` });
     }
 
     res.json({

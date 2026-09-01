@@ -1,49 +1,81 @@
+/* ==========================================
+   USER DASHBOARD CONTAINER & LAYOUT
+   ========================================== */
 .dashboard-container {
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background-color: #f8fafc;
 }
 
 .dashboard-content {
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 0 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
 }
 
 .dashboard-content h2 {
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
 }
 
+/* ==========================================
+   CARDS (Form & Table Cards)
+   ========================================== */
 .form-card, .table-card {
-  background: white;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
   margin-bottom: 30px;
+  transition: all 0.3s ease;
 }
 
 .form-card h3, .table-card h3 {
-  margin-bottom: 15px;
-  color: #444;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 20px;
 }
 
+/* ==========================================
+   FORM GROUPS & CONTROLS
+   ========================================== */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #555;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.9rem;
 }
 
-.form-group input, .form-group textarea, .form-group select {
+.form-group input, 
+.form-group textarea, 
+.form-group select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #334155;
+  background-color: #f8fafc;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus, 
+.form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
 }
 
 .form-row {
@@ -55,49 +87,166 @@
   flex: 1;
 }
 
+/* ==========================================
+   SUBMIT BUTTON
+   ========================================== */
 .submit-btn {
-  background-color: #007bff;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  display: inline-block;
 }
 
 .submit-btn:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   DATA TABLE & RESPONSIVENESS
+   ========================================== */
+.table-card {
+  overflow-x: auto; /* Choti screen par table scrollable karne ke liye */
 }
 
 .data-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  text-align: left;
+  white-space: nowrap; /* Mobile par text ko break hone se bachane ke liye */
 }
 
 .data-table th, .data-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.95rem;
 }
 
 .data-table th {
-  background-color: #f1f1f1;
-  color: #333;
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e2e8f0;
 }
 
+.data-table td {
+  color: #334155;
+}
+
+.data-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* ==========================================
+   STATUS BADGES (Pill Style)
+   ========================================== */
 .status-badge {
-  padding: 5px 10px;
-  border-radius: 12px;
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.pending { 
+  background-color: #fef9c3; 
+  color: #854d0e; 
+}
+
+.status-badge.admin-review { 
+  background-color: #e0f2fe; 
+  color: #0369a1; 
+}
+
+.status-badge.in-progress { 
+  background-color: #ccfbf1; 
+  color: #0f766e; 
+}
+
+.status-badge.resolved { 
+  background-color: #dcfce7; 
+  color: #166534; 
+}
+
+.status-badge.rejected { 
+  background-color: #fee2e2; 
+  color: #991b1b; 
+}
+
+/* ==========================================
+   ERROR & SUCCESS MESSAGES
+   ========================================== */
+.error-msg { 
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   font-size: 0.85rem;
   font-weight: 500;
+  border: 1px solid #fecaca;
+  text-align: center;
+} 
+
+.success-msg { 
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #bbf7d0;
+  text-align: center;
 }
 
-.status-badge.pending { background-color: #ffeeba; color: #856404; }
-.status-badge.admin-review { background-color: #b8daff; color: #004085; }
-.status-badge.in-progress { background-color: #bee5eb; color: #0c5460; }
-.status-badge.resolved { background-color: #d4edda; color: #155724; }
-.status-badge.rejected { background-color: #f8d7da; color: #721c24; }
+/* ==========================================
+   MOBILE RESPONSIVE MEDIA QUERY (768px & below)
+   ========================================== */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 20px 12px;
+  }
 
-.error-msg { color: #dc3545; margin-bottom: 10px; }
-.success-msg { color: #28a745; margin-bottom: 10px; }
+  .dashboard-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .form-card, .table-card {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+
+  .form-row {
+    flex-direction: column; /* Mobile par category aur priority ek ke niche ek aa jayenge */
+    gap: 0;
+  }
+
+  .submit-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .data-table th, .data-table td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+}

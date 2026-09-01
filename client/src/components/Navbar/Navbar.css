@@ -1,47 +1,125 @@
+/* Ultra Pro Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #343a40;
-  color: white;
-  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #1e293b, #0f172a); /* Modern dark gradient */
+  color: #ffffff;
+  padding: 1rem 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .navbar-brand h2 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Stylish gradient text effect */
 }
 
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
 }
 
 .navbar-links a {
-  color: white;
+  color: #cbd5e1;
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Smooth underline hover effect */
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #38bdf8;
+  transition: width 0.3s ease;
 }
 
 .navbar-links a:hover {
-  text-decoration: underline;
+  color: #ffffff;
+}
+
+.navbar-links a:hover::after {
+  width: 100%;
 }
 
 .user-info {
   font-size: 0.9rem;
-  color: #ffc107;
+  color: #ffb703;
+  font-weight: 600;
+  background: rgba(255, 183, 3, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 183, 3, 0.2);
 }
 
 .logout-btn {
-  background-color: #dc3545;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
 }
 
 .logout-btn:hover {
-  background-color: #c82333;
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-1,px);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE MEDIA QUERY (768px & below)
+   ================================---------- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Mobile par items ek ke niche ek aa jayenge */
+    padding: 1rem;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .navbar-brand h2 {
+    font-size: 1.25rem;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap; /* Agar links zyada hon toh wrap ho kar niche adjust ho jayein */
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .user-info {
+    font-size: 0.85rem;
+    padding: 4px 10px;
+  }
+
+  .logout-btn {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+  }
 }

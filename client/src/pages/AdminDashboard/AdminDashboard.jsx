@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
 import Navbar from '../../components/Navbar/Navbar';
 import './AdminDashboard.css';
@@ -7,15 +7,23 @@ export default function AdminDashboard() {
   const [complaints, setComplaints] = useState([]);
   const [users, setUsers] = useState([]);
   const [activeTab, setActiveTab] = useState('complaints');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  // Edit User State
+  const [editingUserId, setEditingUserId] = useState(null);
+  const [editFormData, setEditFormData] = useState({ name: '', email: '', role: '', status: '' });
 
   const fetchAdminData = async () => {
     try {
-      const compRes = await API.get('/complaints/all'); // Fixed URL
+      setError('');
+      const compRes = await API.get('/complaints/all');
       setComplaints(compRes.data);
 
-      const userRes = await API.get('/users'); // Fixed URL
+      const userRes = await API.get('/users');
       setUsers(userRes.data);
     } catch (err) {
+      setError('Error fetching admin data');
       console.error('Error fetching admin data:', err);
     }
   };
@@ -26,7 +34,7 @@ export default function AdminDashboard() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await API.patch(`/complaints/${id}/status`, { status: newStatus }); // Fixed URL
+      await API.patch(`/complaints/${id}/status`, { status: newStatus });
       fetchAdminData();
     } catch (err) {
       alert('Failed to update status');
@@ -35,10 +43,51 @@ export default function AdminDashboard() {
 
   const handleUserStatusUpdate = async (id, status) => {
     try {
-      await API.patch(`/users/${id}/status`, { status }); // Fixed URL
+      await API.patch(`/users/${id}/status`, { status });
       fetchAdminData();
     } catch (err) {
       alert('Failed to update user status');
+    }
+  };
+
+  // Start Editing User
+  const handleEditClick = (user) => {
+    setEditingUserId(user._id);
+    setEditFormData({ 
+      name: user.name, 
+      email: user.email, 
+      role: user.role, 
+      status: user.status 
+    });
+  };
+
+  // Handle Edit Input Changes
+  const handleEditChange = (e) => {
+    setEditFormData({ ...editFormData, [e.target.name]: e.target.value });
+  };
+
+  // Submit Updated User Details
+  const handleUpdateUser = async (userId) => {
+    try {
+      await API.put(`/users/${userId}`, editFormData);
+      setEditingUserId(null);
+      setSuccess('User updated successfully');
+      fetchAdminData();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to update user');
+    }
+  };
+
+  // Delete User
+  const handleDeleteUser = async (userId) => {
+    if (!window.confirm('Are you sure you want to delete this user account?')) return;
+
+    try {
+      await API.delete(`/users/${userId}`);
+      setSuccess('User deleted successfully');
+      fetchAdminData();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to delete user');
     }
   };
 
@@ -47,6 +96,9 @@ export default function AdminDashboard() {
       <Navbar />
       <div className="dashboard-content">
         <h2>Admin Management Dashboard</h2>
+
+        {error && <div className="error-msg" style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+        {success && <div className="success-msg" style={{ color: 'green', marginBottom: '10px' }}>{success}</div>}
 
         {/* Tab Switching Buttons */}
         <div className="tab-buttons">
@@ -114,7 +166,7 @@ export default function AdminDashboard() {
         {/* Users Tab */}
         {activeTab === 'users' && (
           <div className="table-card">
-            <h3>Registered Users & Approval</h3>
+            <h3>Registered Users & Administration</h3>
             <table className="data-table">
               <thead>
                 <tr>
@@ -122,37 +174,83 @@ export default function AdminDashboard() {
                   <th>Email</th>
                   <th>Role</th>
                   <th>Account Status</th>
-                  <th>Action</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((u) => (
                   <tr key={u._id}>
-                    <td>{u.name}</td>
-                    <td>{u.email}</td>
-                    <td>{u.role}</td>
-                    <td>
-                      <span className={`status-badge ${u.status.toLowerCase()}`}>
-                        {u.status}
-                      </span>
-                    </td>
-                    <td>
-                      {u.status === 'PENDING' ? (
-                        <button 
-                          onClick={() => handleUserStatusUpdate(u._id, 'ACTIVE')} 
-                          className="approve-btn"
-                        >
-                          Approve
-                        </button>
-                      ) : (
-                        <button 
-                          onClick={() => handleUserStatusUpdate(u._id, u.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE')}
-                          className={u.status === 'ACTIVE' ? 'deactivate-btn' : 'approve-btn'}
-                        >
-                          {u.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
-                        </button>
-                      )}
-                    </td>
+                    {editingUserId === u._id ? (
+                      <>
+                        <td>
+                          <input 
+                            type="text" 
+                            name="name" 
+                            value={editFormData.name} 
+                            onChange={handleEditChange} 
+                          />
+                        </td>
+                        <td>
+                          <input 
+                            type="email" 
+                            name="email" 
+                            value={editFormData.email} 
+                            onChange={handleEditChange} 
+                          />
+                        </td>
+                        <td>
+                          <select name="role" value={editFormData.role} onChange={handleEditChange}>
+                            <option value="USER">USER</option>
+                            <option value="ADMIN">ADMIN</option>
+                          </select>
+                        </td>
+                        <td>
+                          <select name="status" value={editFormData.status} onChange={handleEditChange}>
+                            <option value="PENDING">PENDING</option>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="REJECTED">REJECTED</option>
+                            <option value="DEACTIVATED">DEACTIVATED</option>
+                          </select>
+                        </td>
+                        <td>
+                          <button onClick={() => handleUpdateUser(u._id)} className="approve-btn">Save</button>
+                          <button onClick={() => setEditingUserId(null)} className="deactivate-btn" style={{ marginLeft: '4px' }}>Cancel</button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>{u.name}</td>
+                        <td>{u.email}</td>
+                        <td>{u.role}</td>
+                        <td>
+                          <span className={`status-badge ${u.status.toLowerCase()}`}>
+                            {u.status}
+                          </span>
+                        </td>
+                        <td>
+                          {u.status === 'PENDING' && (
+                            <button 
+                              onClick={() => handleUserStatusUpdate(u._id, 'ACTIVE')} 
+                              className="approve-btn"
+                            >
+                              Approve
+                            </button>
+                          )}
+                          <button 
+                            onClick={() => handleEditClick(u)} 
+                            className="tab-btn edit-action-btn"
+                          >
+                            Edit
+                          </button>
+                          <button 
+                            onClick={() => handleDeleteUser(u._id)} 
+                            className="deactivate-btn"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>

@@ -1,86 +1,177 @@
+/* ==========================================
+   REGISTER CONTAINER & FORM STYLING
+   ========================================== */
 .register-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  box-sizing: border-box;
 }
 
 .register-form {
   width: 100%;
-  max-width: 400px;
-  padding: 30px;
+  max-width: 420px;
+  padding: 35px;
   background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.register-form:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
 }
 
 .register-form h2 {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   text-align: center;
-  color: #333;
+  color: #1e293b;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
+/* Form Groups & Inputs */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #555;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.9rem;
 }
 
-.form-group input {
+.form-group input, 
+.form-group select, 
+.form-group textarea {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #334155;
+  background-color: #f8fafc;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+/* Register Button */
 .register-btn {
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+  padding: 12px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   margin-top: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  box-sizing: border-box;
 }
 
 .register-btn:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
 }
 
+.register-btn:active {
+  transform: translateY(0);
+}
+
+/* Messages Styling */
 .error-msg {
-  color: #dc3545;
-  margin-bottom: 15px;
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #fecaca;
+  box-sizing: border-box;
 }
 
 .success-msg {
-  color: #28a745;
-  margin-bottom: 15px;
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #bbf7d0;
+  box-sizing: border-box;
 }
 
+/* Switch Text */
 .switch-text {
-  margin-top: 15px;
+  margin-top: 20px;
   text-align: center;
   font-size: 0.9rem;
+  color: #64748b;
 }
 
 .switch-text a {
-  color: #007bff;
+  color: #2563eb;
   text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .switch-text a:hover {
+  color: #1d4ed8;
   text-decoration: underline;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE MEDIA QUERY (768px & below)
+   ========================================== */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 15px;
+    align-items: center; /* Mobile par vertical center karne ke liye */
+    min-height: 100vh;
+  }
+
+  .register-form {
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+  }
+
+  .register-form h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .form-group input, 
+  .form-group select, 
+  .form-group textarea {
+    padding: 10px 12px;
+  }
 }
